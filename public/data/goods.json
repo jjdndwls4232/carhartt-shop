@@ -1,0 +1,174 @@
+[
+  {
+    "id": 1,
+    "title": "OG ACTIVE JACKET",
+    "description": "오가닉 덕 캔버스 원단에 퀼팅 안감을 더한 칼하트 WIP 의 대표 후드 워크 재킷",
+    "category": "men",
+    "price": 423000,
+    "salePrice": null,
+    "soldOut": false,
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": [
+      { "id": "black", "name": "블랙", "hex": "#1f1f1f", "image": "img/HomeBestGoods1.jpg" },
+      { "id": "hamilton-brown", "name": "해밀턴 브라운", "hex": "#9a6a3c", "image": "img/goods/Goods1_brown.jpg" },
+      { "id": "dark-navy", "name": "다크 네이비", "hex": "#232b3e", "image": "img/goods/Goods1_navy.jpg" }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "OG SINGLE KNEE PANT CAMANO",
+    "description": "카마노 데님으로 만든 워크웨어 실루엣의 싱글 니 팬츠",
+    "category": "men",
+    "price": 139800,
+    "salePrice": 111800,
+    "soldOut": false,
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": [
+      { "id": "blue-stone", "name": "블루 스톤워시", "hex": "#5a7394", "image": "img/HomeBestGoods2.jpg" },
+      { "id": "black-rinsed", "name": "블랙 린스드", "hex": "#2b2b2e", "image": "img/goods/Goods2_black.jpg" }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "ALUMNI BEANIE",
+    "description": "부드러운 니트 조직에 칼하트 WIP 로고 자수를 더한 데일리 비니",
+    "category": "accessories",
+    "price": 83000,
+    "salePrice": null,
+    "soldOut": false,
+    "sizes": ["FREE"],
+    "colors": [
+      { "id": "black", "name": "블랙", "hex": "#1a1a1a", "image": "img/HomeBestGoods3.jpg" },
+      { "id": "grey", "name": "그레이", "hex": "#8a8d91", "image": "img/goods/Goods3_grey.jpg" },
+      { "id": "burgundy", "name": "버건디", "hex": "#6e2430", "image": "img/goods/Goods3_burgundy.jpg" }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "W L/S CARDONA POCKET T-SHIRT",
+    "description": "스트라이프 패턴과 가슴 포켓이 포인트인 여성용 롱 슬리브 티셔츠",
+    "category": "women",
+    "price": 133000,
+    "salePrice": null,
+    "soldOut": false,
+    "sizes": ["S", "M", "L"],
+    "colors": [
+      { "id": "amarone-stripe", "name": "아마로네 스트라이프", "hex": "#4a2a33", "image": "img/HomeBestGoods4.jpg" },
+      { "id": "navy-stripe", "name": "네이비 스트라이프", "hex": "#2c3550", "image": "img/goods/Goods4_navy.jpg" }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "W OG ARCAN JACKET",
+    "description": "워싱 가공으로 빈티지한 멋을 살린 여성용 코듀로이 칼라 워크 재킷",
+    "category": "women",
+    "price": 425000,
+    "salePrice": null,
+    "soldOut": false,
+    "sizes": ["S", "M", "L"],
+    "colors": [
+      { "id": "black-faded", "name": "블랙 페이디드", "hex": "#4a4a4c", "image": "img/HomeBestGoods5.jpg" },
+      { "id": "brown-faded", "name": "브라운 페이디드", "hex": "#8b6a4a", "image": "img/goods/Goods5_brown.jpg" }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "CLIFF BACKPACK",
+    "description": "노트북 수납공간과 여러 개의 포켓을 갖춘 튼튼한 데일리 백팩",
+    "category": "accessories",
+    "price": 158000,
+    "salePrice": null,
+    "soldOut": true,
+    "sizes": ["FREE"],
+    "colors": [
+      { "id": "black", "name": "블랙", "hex": "#151515", "image": "img/HomeBestGoods6.jpg" },
+      { "id": "olive", "name": "올리브", "hex": "#5d5e3a", "image": "img/goods/Goods6_olive.jpg" }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "CANVAS 6-PANEL CAP",
+    "description": "캔버스 원단에 스퀘어 로고 패치를 단 6패널 볼캡",
+    "category": "accessories",
+    "price": 73000,
+    "salePrice": 58000,
+    "soldOut": false,
+    "sizes": ["FREE"],
+    "colors": [
+      { "id": "larch", "name": "라치", "hex": "#857437", "image": "img/HomeBestGoods7.jpg" },
+      { "id": "black", "name": "블랙", "hex": "#1f1f1f", "image": "img/goods/Goods7_black.jpg" },
+      { "id": "hamilton-brown", "name": "해밀턴 브라운", "hex": "#9a6a3c", "image": "img/goods/Goods7_brown.jpg" },
+      { "id": "dark-navy", "name": "다크 네이비", "hex": "#232b3e", "image": "img/goods/Goods7_navy.jpg" }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "OG SANTA FE JACKET",
+    "description": "코듀로이 칼라와 체크 안감을 더한 클래식 캔버스 워크 재킷",
+    "category": "men",
+    "price": 483000,
+    "salePrice": null,
+    "soldOut": false,
+    "sizes": ["M", "L", "XL"],
+    "colors": [
+      { "id": "hamilton-brown", "name": "해밀턴 브라운", "hex": "#a8794a", "image": "img/HomeBestGoods8.jpg" },
+      { "id": "black", "name": "블랙", "hex": "#1f1f1f", "image": "img/goods/Goods8_black.jpg" }
+    ]
+  },
+  {
+    "id": 9,
+    "title": "W HOODED NELSON JACKET",
+    "description": "가먼트 다잉으로 자연스러운 색감을 낸 여성용 후드 집업 스웨트 재킷",
+    "category": "women",
+    "price": 235000,
+    "salePrice": null,
+    "soldOut": false,
+    "sizes": ["S", "M", "L"],
+    "colors": [
+      { "id": "grey", "name": "그레이", "hex": "#7d7f83", "image": "img/HomeBestGoods9.jpg" },
+      { "id": "black", "name": "블랙", "hex": "#262626", "image": "img/goods/Goods9_black.jpg" },
+      { "id": "green", "name": "그린", "hex": "#5d7a63", "image": "img/goods/Goods9_green.jpg" }
+    ]
+  },
+  {
+    "id": 10,
+    "title": "SUBU CORDURA® SLIPPERS",
+    "description": "코듀라 원단과 쿠션 솔로 실내외 어디서나 편한 패딩 슬리퍼",
+    "category": "accessories",
+    "price": 138000,
+    "salePrice": 110000,
+    "soldOut": false,
+    "sizes": ["FREE"],
+    "colors": [
+      { "id": "plant", "name": "플랜트", "hex": "#2f4a2c", "image": "img/HomeBestGoods10.jpg" },
+      { "id": "black", "name": "블랙", "hex": "#1a1a1a", "image": "img/goods/Goods10_black.jpg" }
+    ]
+  },
+  {
+    "id": 11,
+    "title": "W SINGLE KNEE SKIRT",
+    "description": "싱글 니 팬츠의 디테일을 그대로 옮긴 여성용 데님 롱 스커트",
+    "category": "women",
+    "price": 245000,
+    "salePrice": null,
+    "soldOut": true,
+    "sizes": ["S", "M"],
+    "colors": [
+      { "id": "blue-stone", "name": "블루 스톤워시", "hex": "#6a86a8", "image": "img/HomeBestGoods11.jpg" }
+    ]
+  },
+  {
+    "id": 12,
+    "title": "L/S VISTA T-SHIRT",
+    "description": "가먼트 다잉으로 은은한 빈티지 색감을 낸 오버핏 롱 슬리브 스웨트",
+    "category": "men",
+    "price": 178000,
+    "salePrice": null,
+    "soldOut": false,
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": [
+      { "id": "duck-green", "name": "덕 그린", "hex": "#5b7462", "image": "img/HomeBestGoods12.jpg" },
+      { "id": "grey", "name": "그레이", "hex": "#8a8d91", "image": "img/goods/Goods12_grey.jpg" }
+    ]
+  }
+]

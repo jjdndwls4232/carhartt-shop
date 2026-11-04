@@ -1,0 +1,16 @@
+ul,
+a {
+    list-style: none;
+    text-decoration: none;
+    color: #111;
+}
+
+button {
+    all: unset;
+    cursor: pointer;
+}
+
+body {
+    margin: 0;
+    overflow-x: hidden;
+}

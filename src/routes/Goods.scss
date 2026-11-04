@@ -1,0 +1,573 @@
+// ============================================================
+// Goods.scss  (routes 폴더 - Goods.css 를 대신하는 파일)
+// 역할: 상품 목록 페이지 + 상품 카드 스타일 (클래스는 goods- 로 시작)
+// ============================================================
+
+$black: #111;
+$white: #fff;
+$text-sub: #666;
+$line: #ddd;
+$card-bg: #f5f5f5; // 상품 사진 배경색과 같게 (사진이 덜 채워져도 경계가 안 보이게)
+$sale: #d0021b;
+
+.goods-page {
+  color: $black;
+
+  button {
+    font-family: inherit;
+  }
+
+  button:focus-visible,
+  select:focus-visible {
+    outline: 2px solid $black;
+    outline-offset: 2px;
+  }
+}
+
+// ==========================================================
+// 1. 상단 배너
+// ==========================================================
+.goods-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  height: 320px;
+  // 위쪽을 어둡게 덮어서 흰 글씨가 잘 보이게
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.1)),
+    var(--hero-img) center / cover no-repeat;
+  color: $white;
+  margin-top: 40px;
+}
+
+.goods-hero-inner {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 48px 100px 0;
+  box-sizing: border-box;
+}
+
+.goods-breadcrumb {
+  margin: 0 0 6px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.goods-hero-title {
+  margin: 0 0 22px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.goods-hero-desc {
+  margin: 0;
+  font-size: 13px;
+}
+
+// ==========================================================
+// 2. 탭 + 필터
+// ==========================================================
+.goods-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 100px 120px;
+  box-sizing: border-box;
+}
+
+.goods-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 56px 0 0 120px;
+
+  ul {
+    display: flex;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto; // 탭이 많아지면 가로 스크롤
+    scrollbar-width: none;
+  }
+}
+
+.goods-tab {
+  display: block;
+  padding: 7px 14px;
+  border-radius: 4px;
+  background: #f2f2f2;
+  font-size: 12px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    background: #e4e4e4;
+  }
+
+  &.is-active {
+    background: $black;
+    color: $white;
+  }
+}
+
+.goods-tab-next {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.goods-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 24px 0 64px;
+}
+
+.goods-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 22px;
+}
+
+// select : 기본 모양을 지우고 글자 + 아래 화살표만
+.goods-select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  select {
+    appearance: none;
+    padding: 4px 22px 4px 0;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    font-size: 12px;
+    color: $black;
+    cursor: pointer;
+  }
+}
+
+.goods-select-arrow {
+  position: absolute;
+  right: 2px;
+  font-size: 10px;
+  pointer-events: none; // 화살표를 눌러도 select 가 열리게
+}
+
+// 체크박스 : 진짜 input 은 숨기고 네모 칸을 직접 그림
+.goods-check {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  cursor: pointer;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}
+
+.goods-check-box {
+  width: 14px;
+  height: 14px;
+  border: 1px solid #999;
+  border-radius: 2px;
+  box-sizing: border-box;
+  transition: background-color 0.15s ease;
+
+  input:checked + & {
+    border-color: $black;
+    // 체크 표시 (흰색 V) 를 SVG 로 그림
+    background: $black
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2l2.3 2.3 4.7-4.9' fill='none' stroke='white' stroke-width='1.6'/%3E%3C/svg%3E")
+      center / 100% no-repeat;
+  }
+
+  input:focus-visible + & {
+    outline: 2px solid $black;
+    outline-offset: 2px;
+  }
+}
+
+// ==========================================================
+// 3. 상품 목록
+// ==========================================================
+.goods-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 64px 20px;
+  margin: 0;
+  padding: 0 0 0 0;
+  list-style: none;
+}
+
+.goods-card {
+  text-align: center;
+}
+
+.goods-card-image {
+  position: relative;
+  aspect-ratio: 2 / 3; // 상품 사진 비율(680x1020)과 같게
+  overflow: hidden;
+  background: $card-bg;
+}
+
+// 사진을 감싸는 칸 : 색을 바꿀 때마다 페이드인
+.goods-card-photo {
+  position: absolute;
+  inset: 0;
+  animation: goodsFade 0.35s ease;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+}
+
+.goods-card:hover .goods-card-photo img {
+  transform: scale(1.04);
+}
+
+// 사진 파일이 아직 없을 때 보여주는 자리 (색상 동그라미 + 이름 + 준비중)
+.goods-card-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 100%;
+  color: #999;
+  font-size: 12px;
+
+  p {
+    margin: 0;
+  }
+}
+
+.goods-card-empty-dot {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  background: var(--swatch);
+}
+
+@keyframes goodsFade {
+  from {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.goods-card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 3px 8px;
+  background: $black;
+  color: $white;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+
+  &.is-sale {
+    background: $sale;
+  }
+}
+
+.is-soldout .goods-card-photo {
+  opacity: 0.5;
+}
+
+// ---------- 색상 동그라미 ----------
+.goods-swatches {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 12px 0 24px;
+
+  ul {
+    display: flex;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+.goods-swatch {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--swatch);
+  // 안쪽 흰 테두리 + 바깥 회색 테두리 → 밝은 색도 경계가 보이게
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  outline: 1px solid transparent;
+  outline-offset: 2px;
+  cursor: pointer;
+  transition:
+    outline-color 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &.is-active {
+    outline-color: $black;
+  }
+}
+
+.goods-swatch-arrow {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 22px;
+  font-size: 10px;
+  color: $text-sub;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.25;
+    cursor: default;
+  }
+}
+
+// ---------- 이름 / 설명 / 가격 ----------
+.goods-card-info {
+  padding: 0 8px;
+}
+
+.goods-card-title {
+  margin: 0 0 18px;
+  font-size: 13px;
+  font-weight: 700;
+  // 한 줄 넘으면 말줄임
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.goods-card-desc {
+  display: -webkit-box;
+  margin: 0 0 18px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1.5;
+  color: $text-sub;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; // 두 줄까지만
+  line-clamp: 2;
+}
+
+.goods-card-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 13px;
+
+  strong {
+    font-weight: 700;
+  }
+
+  del {
+    font-size: 12px;
+    color: #aaa;
+  }
+}
+
+.goods-card-rate {
+  font-weight: 700;
+  color: $sale;
+}
+
+// ---------- 로딩 / 안내 ----------
+.goods-skeleton-image,
+.goods-skeleton-line {
+  background: linear-gradient(90deg, #eee 25%, #f6f6f6 50%, #eee 75%);
+  background-size: 200% 100%;
+  animation: goodsShimmer 1.2s linear infinite;
+}
+
+.goods-skeleton-image {
+  aspect-ratio: 3 / 4;
+  margin-bottom: 20px;
+}
+
+.goods-skeleton-line {
+  height: 12px;
+  margin: 0 auto 10px;
+  width: 70%;
+
+  &.is-short {
+    width: 40%;
+  }
+}
+
+@keyframes goodsShimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.goods-message {
+  padding: 120px 0;
+  text-align: center;
+  color: $text-sub;
+  font-size: 14px;
+
+  p {
+    margin: 0 0 20px;
+  }
+}
+
+.goods-retry {
+  display: inline-block;
+  padding: 10px 24px;
+  border: 1px solid $black;
+  color: $black;
+  font-size: 13px;
+  cursor: pointer;
+
+  &:hover {
+    background: #f2f2f2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .goods-card-photo,
+  .goods-skeleton-image,
+  .goods-skeleton-line {
+    animation: none;
+  }
+
+  .goods-card-photo img,
+  .goods-swatch {
+    transition: none;
+  }
+}
+
+// ==========================================================
+//      태블릿 (768px ~ 1023px) : 3열, 여백 축소
+// ==========================================================
+@media (min-width: 768px) and (max-width: 1023px) {
+  .goods-hero {
+    height: 260px;
+  }
+
+  .goods-hero-inner {
+    padding: 40px 40px 0;
+  }
+
+  .goods-inner {
+    padding: 0 40px 80px;
+  }
+
+  .goods-tabs {
+    margin: 40px 0 0;
+  }
+
+  .goods-toolbar {
+    margin-bottom: 40px;
+  }
+
+  .goods-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 48px 16px;
+  }
+}
+
+// ==========================================================
+//      모바일 (767px 이하) : 2열, 필터는 위 / 정렬은 오른쪽 위로
+// ==========================================================
+@media (max-width: 767px) {
+  .goods-hero {
+    height: 200px;
+  }
+
+  .goods-hero-inner {
+    padding: 28px 16px 0;
+  }
+
+  .goods-hero-title {
+    margin-bottom: 12px;
+    font-size: 20px;
+  }
+
+  .goods-hero-desc {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .goods-inner {
+    padding: 0 16px 64px;
+  }
+
+  .goods-tabs {
+    margin: 28px 0 0;
+
+    ul {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+
+  .goods-toolbar {
+    align-items: flex-start;
+    margin: 20px 0 28px;
+  }
+
+  .goods-filters {
+    gap: 8px 14px;
+  }
+
+  .goods-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 36px 12px;
+  }
+
+  .goods-swatches {
+    margin: 10px 0 14px;
+  }
+
+  .goods-swatch {
+    width: 18px;
+    height: 18px;
+  }
+
+  .goods-card-title {
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+
+  .goods-card-desc {
+    margin-bottom: 10px;
+    font-size: 11px;
+  }
+
+  .goods-card-price {
+    font-size: 12px;
+  }
+}

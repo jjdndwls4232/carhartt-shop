@@ -1,0 +1,403 @@
+// ============================================================
+// PostForm.scss  (components/board 폴더 - 새로 만드는 파일)
+// 역할: 글 작성 / 수정 페이지의 모든 스타일
+// 구조: 전부 .write-page 안에 넣어서 다른 CSS 와 섞이지 않게 함
+//       클래스 이름은 write- 로 시작 (board- / post- 와 구분)
+// ============================================================
+
+// ---------- 색상 변수 ----------
+$black: #111;
+$white: #fff;
+$line: #e5e5e5; // 테두리, 구분선
+$text-sub: #888; // 보조 글자색
+$placeholder: #bbb;
+
+.write-page {
+  max-width: 860px; // 상세 페이지와 같은 폭
+  margin: 0 auto;
+  padding: 48px 20px 80px;
+  color: $black;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+  }
+
+  // 키보드(Tab)로 이동할 때 보이는 포커스 표시 (접근성)
+  a:focus-visible,
+  button:focus-visible,
+  .write-dropzone:focus-visible {
+    outline: 2px solid $black;
+    outline-offset: 2px;
+  }
+
+  .write-empty {
+    padding: 80px 0 32px;
+    text-align: center;
+    color: $text-sub;
+  }
+
+  // ==========================================================
+  // 1. 상단 제목
+  // ==========================================================
+  .write-title {
+    margin: 0 0 8px;
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  .write-desc {
+    margin: 0 0 28px;
+    font-size: 14px;
+    color: $text-sub;
+  }
+
+  // ==========================================================
+  // 2. 입력 카드
+  // ==========================================================
+  .write-card {
+    padding: 36px 40px 40px;
+    border: 1px solid $line;
+    border-radius: 8px;
+    background: $white;
+  }
+
+  .write-field {
+    margin-bottom: 24px;
+  }
+
+  .write-label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: 700;
+
+    em {
+      font-style: normal;
+      font-weight: 400;
+      color: $text-sub;
+    }
+  }
+
+  // 입력칸 공통 모양
+  .write-input,
+  .write-textarea,
+  .write-select select {
+    display: block;
+    width: 100%;
+    padding: 0 16px;
+    border: 1px solid $line;
+    border-radius: 4px;
+    background: $white;
+    font-size: 14px;
+    color: $black;
+    transition: border-color 0.2s ease;
+
+    &::placeholder {
+      color: $placeholder;
+    }
+
+    // 입력 중인 칸은 테두리를 진하게 (기본 파란 테두리 대신)
+    &:focus {
+      outline: none;
+      border-color: $black;
+    }
+  }
+
+  .write-input,
+  .write-select select {
+    height: 46px;
+  }
+
+  .write-textarea {
+    min-height: 180px;
+    padding: 14px 16px;
+    line-height: 1.7;
+    resize: vertical; // 세로로만 크기 조절 가능
+  }
+
+  .write-count {
+    margin: 6px 0 0;
+    font-size: 12px;
+    text-align: right;
+    color: $text-sub;
+  }
+
+  // select 기본 화살표를 숨기고 아이콘을 올려 둠 (목록 페이지 정렬 select 와 같은 방식)
+  .write-select {
+    position: relative;
+
+    select {
+      appearance: none;
+      padding-right: 44px;
+      cursor: pointer;
+    }
+  }
+
+  .write-select-icon {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    font-size: 12px;
+    transform: translateY(-50%);
+    pointer-events: none; // 아이콘을 눌러도 select 가 열리도록 클릭을 통과시킴
+  }
+
+  // ---------- 첨부파일 ----------
+  .write-file-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 46px;
+    padding: 0 6px;
+    margin-bottom: 12px;
+    border: 1px solid $line;
+    border-radius: 4px;
+  }
+
+  // 전역 CSS 의 button { all: unset } 때문에 모양을 직접 지정
+  .write-file-btn {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: border-color 0.2s ease;
+
+    &:hover {
+      border-color: $black;
+    }
+  }
+
+  .write-file-name {
+    min-width: 0;
+    overflow: hidden;
+    font-size: 13px;
+    color: $text-sub;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .write-dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 32px 16px;
+    border: 1px dashed #d5d5d5;
+    border-radius: 4px;
+    text-align: center;
+    color: $text-sub;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease;
+
+    p {
+      margin: 0;
+      font-size: 13px;
+    }
+
+    small {
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    // 마우스를 올렸거나 파일을 끌고 온 상태
+    &:hover,
+    &.is-dragging {
+      border-color: $black;
+      background: #fafafa;
+    }
+  }
+
+  .write-dropzone-icon {
+    margin-bottom: 4px;
+    font-size: 26px;
+    color: #999;
+  }
+
+  // 첨부한 파일 목록
+  .write-file-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+    margin: 12px 0 0;
+    list-style: none;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border: 1px solid $line;
+      border-radius: 4px;
+    }
+  }
+
+  .write-file-thumb {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+
+  .write-file-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+
+    span {
+      overflow: hidden;
+      font-size: 13px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    small {
+      font-size: 11px;
+      color: $text-sub;
+    }
+  }
+
+  .write-file-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    color: #999;
+    transition:
+      color 0.2s ease,
+      background 0.2s ease;
+
+    &:hover {
+      background: #f0f0f0;
+      color: $black;
+    }
+  }
+
+  // ==========================================================
+  // 3. 버튼
+  // ==========================================================
+  .write-actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 16px;
+  }
+
+  .write-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 46px;
+    border: 1px solid $black;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
+
+    &--outline {
+      background: $white;
+      border-color: $line;
+      color: $black;
+
+      &:hover {
+        border-color: $black;
+      }
+    }
+
+    &--primary {
+      background: $black;
+      color: $white;
+
+      &:hover {
+        background: #333;
+        border-color: #333;
+      }
+    }
+  }
+
+  // ==========================================================
+  // 4. 목록으로 돌아가기
+  // ==========================================================
+  .write-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+    font-size: 13px;
+    color: $text-sub;
+    transition: color 0.2s ease;
+
+    svg {
+      font-size: 11px;
+    }
+
+    &:hover {
+      color: $black;
+    }
+  }
+
+  // "동작 줄이기"를 설정한 사용자에게는 애니메이션을 끔
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    .write-dropzone {
+      transition: none;
+    }
+  }
+
+  // ==========================================================
+  //      태블릿 (768px ~ 1023px)
+  // ==========================================================
+  @media (min-width: 768px) and (max-width: 1023px) {
+    padding: 40px 24px 70px;
+
+    .write-title {
+      font-size: 25px;
+    }
+
+    .write-card {
+      padding: 32px;
+    }
+  }
+
+  // ==========================================================
+  //      모바일 (767px 이하)
+  // ==========================================================
+  @media (max-width: 767px) {
+    padding: 32px 16px 60px;
+
+    .write-title {
+      font-size: 22px;
+    }
+
+    // 카드 테두리 안쪽 여백을 줄여서 입력칸을 넓게
+    .write-card {
+      padding: 24px 16px;
+    }
+
+    // 버튼 두 개가 한 줄을 반씩 나눠 가짐
+    .write-btn {
+      flex: 1;
+      width: auto;
+    }
+  }
+}

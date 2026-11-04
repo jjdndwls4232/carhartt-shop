@@ -1,0 +1,551 @@
+// ============================================================
+// JoinPage.scss  (routes/auth 폴더 - 새로 만드는 파일)
+// 역할: 회원가입 안내 페이지(/join) + 회원정보 입력 페이지(/join/form) 스타일
+// 구조: 전부 .join-page 안에 넣어서 다른 CSS 와 섞이지 않게 함 (클래스는 join- 로 시작)
+// ============================================================
+
+// ---------- 색상 변수 ----------
+$black: #222;
+$white: #fff;
+$line: #ddd;
+$line-soft: #eee;
+$text-sub: #888;
+$red: #d33;
+$readonly-bg: #f7f7f7;
+
+// 화면에서는 숨기지만 스크린리더와 키보드(Tab)는 그대로 쓸 수 있게 하는 믹스인
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.join-page {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 80px 20px 100px;
+  color: $black;
+
+  a {
+    color: inherit;
+  }
+
+  button,
+  input,
+  select {
+    font-family: inherit;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  select:focus-visible {
+    outline: 2px solid $black;
+    outline-offset: 2px;
+  }
+
+  .join-title {
+    margin: 0 0 14px;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .join-desc {
+    margin: 0;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  // 공통 버튼 (전역 CSS 의 button { all: unset } 때문에 모양을 직접 지정)
+  .join-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &--primary {
+      width: 100%;
+      height: 52px;
+      background: $black;
+      font-size: 15px;
+      font-weight: 600;
+      color: $white;
+
+      &:hover {
+        background: #444;
+      }
+    }
+
+    &--small {
+      flex-shrink: 0;
+      height: 44px;
+      padding: 0 18px;
+      background: $black;
+      font-size: 13px;
+      font-weight: 600;
+      color: $white;
+      white-space: nowrap;
+
+      &:hover {
+        background: #444;
+      }
+    }
+  }
+}
+
+// ==========================================================
+// 1. 회원가입 안내 페이지 (/join)
+// ==========================================================
+.join-intro {
+  max-width: 480px;
+  text-align: center;
+
+  .join-btn--primary {
+    margin-top: 64px;
+  }
+
+  .join-sns-text {
+    margin: 56px 0 20px;
+    font-size: 12px;
+    color: $text-sub;
+  }
+
+  .join-login-link {
+    margin: 56px 0 0;
+    font-size: 13px;
+
+    a {
+      margin-left: 8px;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+
+      &:hover {
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// ==========================================================
+// 2. 회원정보 입력 페이지 (/join/form)
+// ==========================================================
+.join-form-page {
+  .join-form {
+    margin-top: 48px;
+  }
+
+  // 섹션 제목 (기본정보 / 약관동의)
+  .join-section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 2px solid $black;
+
+    h2 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    span {
+      font-size: 11px;
+      color: $text-sub;
+
+      em {
+        margin-right: 2px;
+        font-style: normal;
+        color: $red;
+      }
+    }
+
+    &--terms {
+      margin-top: 64px;
+    }
+  }
+
+  // ---------- 입력칸 ----------
+  .join-field {
+    margin-top: 28px;
+  }
+
+  .join-label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .join-required {
+    color: $red;
+  }
+
+  .join-input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    padding: 0 4px;
+    box-sizing: border-box;
+    border: 0;
+    border-bottom: 1px solid $line;
+    border-radius: 0;
+    background: transparent;
+    font-size: 14px;
+    color: $black;
+    outline: none;
+    transition: border-color 0.2s ease;
+
+    &::placeholder {
+      color: #bbb;
+    }
+
+    &:focus {
+      border-bottom-color: $black;
+    }
+
+    // 직접 입력하지 않는 칸 (주소, 선택한 이메일 도메인)
+    &[readonly] {
+      padding: 0 12px;
+      background: $readonly-bg;
+      cursor: pointer;
+    }
+  }
+
+  // 에러가 있는 칸은 밑줄을 빨갛게
+  .has-error .join-input {
+    border-bottom-color: $red;
+  }
+
+  .join-msg {
+    margin: 8px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: $text-sub;
+
+    &--error {
+      color: $red;
+    }
+  }
+
+  // 비밀번호 + 눈 아이콘
+  .join-pw {
+    position: relative;
+
+    .join-input {
+      padding-right: 40px;
+    }
+  }
+
+  .join-eye {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    padding: 4px;
+    font-size: 14px;
+    color: #999;
+    transform: translateY(-50%);
+
+    &:hover {
+      color: $black;
+    }
+  }
+
+  // 이메일 : 아이디 @ 도메인
+  .join-email {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .join-email-at {
+    flex-shrink: 0;
+    font-size: 14px;
+    color: $text-sub;
+  }
+
+  // 이메일 도메인 select (기본 화살표 숨기고 아이콘 올림)
+  .join-select {
+    position: relative;
+    margin-top: 8px;
+
+    select {
+      width: 100%;
+      height: 44px;
+      padding: 0 36px 0 4px;
+      border: 0;
+      border-bottom: 1px solid $line;
+      border-radius: 0;
+      background: transparent;
+      font-size: 14px;
+      appearance: none;
+      cursor: pointer;
+      outline: none;
+
+      &:focus {
+        border-bottom-color: $black;
+      }
+    }
+  }
+
+  .join-select-icon {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    font-size: 11px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  // 주소 : 기본 주소 + 우편번호 검색 버튼 / 상세 주소
+  .join-address {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  // ---------- 체크박스 (네모 박스 + 체크 표시) ----------
+  .join-check {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    line-height: 18px;
+    cursor: pointer;
+
+    input {
+      @include visually-hidden;
+    }
+
+    &--sub {
+      margin-top: 14px;
+      font-size: 12px;
+      color: #555;
+    }
+
+    &--all {
+      padding: 20px 0;
+      border-bottom: 1px solid $line-soft;
+      font-weight: 600;
+    }
+  }
+
+  .join-check-box {
+    position: relative;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    background: $white;
+  }
+
+  .join-check input:checked + .join-check-box {
+    border-color: $black;
+    background: $black;
+
+    // 체크 표시 (ㄴ 모양 테두리를 45도 돌림)
+    &::after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 5px;
+      width: 5px;
+      height: 9px;
+      border: solid $white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+
+  .join-check input:focus-visible + .join-check-box {
+    outline: 2px solid $black;
+    outline-offset: 2px;
+  }
+
+  // ---------- 성별 (남자 / 여자 버튼) ----------
+  .join-gender {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    label {
+      cursor: pointer;
+    }
+
+    input {
+      @include visually-hidden;
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      border: 1px solid $line;
+      font-size: 14px;
+      color: $text-sub;
+      transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+    }
+
+    // 두 버튼 사이 테두리가 2px 로 겹치지 않게
+    label + label span {
+      border-left: 0;
+    }
+
+    input:checked + span {
+      background: $readonly-bg;
+      font-weight: 600;
+      color: $black;
+      box-shadow: inset 0 0 0 1px $black;
+    }
+
+    input:focus-visible + span {
+      outline: 2px solid $black;
+      outline-offset: 2px;
+    }
+  }
+
+  // ---------- 약관 ----------
+  .join-term {
+    margin-top: 20px;
+  }
+
+  .join-term-required {
+    color: $red;
+  }
+
+  .join-term-optional {
+    color: $text-sub;
+  }
+
+  // 약관 본문 스크롤 박스
+  .join-term-box {
+    height: 140px;
+    margin: 10px 0 0 26px;
+    padding: 14px 16px;
+    overflow-y: auto;
+    border: 1px solid $line;
+    font-size: 12px;
+    line-height: 1.7;
+    color: #555;
+    white-space: pre-line; // 본문의 줄바꿈(\n)을 그대로 보여줌
+
+    &:focus-visible {
+      outline: 2px solid $black;
+      outline-offset: 2px;
+    }
+  }
+
+  .join-server-error {
+    margin-top: 24px;
+    text-align: center;
+  }
+
+  // 가입완료 버튼 : 기본은 회색, 입력이 모두 맞으면(is-ready) 검정
+  .join-submit {
+    width: 100%;
+    height: 52px;
+    margin-top: 48px;
+    background: #e5e5e5;
+    font-size: 15px;
+    font-weight: 600;
+    color: #999;
+
+    &.is-ready {
+      background: $black;
+      color: $white;
+
+      &:hover {
+        background: #444;
+      }
+    }
+
+    &:disabled {
+      cursor: wait;
+    }
+  }
+}
+
+// "동작 줄이기"를 설정한 사용자에게는 애니메이션을 끔
+@media (prefers-reduced-motion: reduce) {
+  .join-page * {
+    transition: none !important;
+  }
+}
+
+// ==========================================================
+//      태블릿 (768px ~ 1023px)
+// ==========================================================
+@media (min-width: 768px) and (max-width: 1023px) {
+  .join-page {
+    padding: 64px 24px 80px;
+  }
+
+  .join-intro .join-btn--primary {
+    margin-top: 56px;
+  }
+
+  .join-form-page .join-section-head--terms {
+    margin-top: 56px;
+  }
+}
+
+// ==========================================================
+//      모바일 (767px 이하)
+// ==========================================================
+@media (max-width: 767px) {
+  .join-page {
+    padding: 48px 16px 64px;
+
+    .join-title {
+      font-size: 20px;
+    }
+
+    .join-desc {
+      font-size: 13px;
+    }
+  }
+
+  .join-intro {
+    .join-btn--primary {
+      margin-top: 40px;
+    }
+
+    .join-sns-text,
+    .join-login-link {
+      margin-top: 40px;
+    }
+  }
+
+  .join-form-page {
+    .join-form {
+      margin-top: 32px;
+    }
+
+    .join-btn--small {
+      padding: 0 12px;
+      font-size: 12px;
+    }
+
+    // 약관 본문 박스는 왼쪽 들여쓰기 없이 화면 폭을 다 씀
+    .join-term-box {
+      height: 120px;
+      margin-left: 0;
+    }
+
+    .join-section-head--terms {
+      margin-top: 48px;
+    }
+  }
+}

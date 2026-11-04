@@ -1,0 +1,42 @@
+.footer-wrap {
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.subs-wrap {
+  width: 100%;
+  background-color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  padding: 0 150px;
+}
+
+.info-company {
+  display: flex;
+}
+
+.info-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.info-sns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.info-sns-text {
+  display: flex;
+  gap: 10px;
+}

@@ -1,0 +1,499 @@
+// ============================================================
+// Board.scss  (components 폴더)
+// 역할: 글 목록 화면의 모든 스타일
+// 구조: 전부 .board-page 안에 넣어서(스코프) 쇼핑몰의 다른 CSS 와 섞이지 않게 함
+//       클래스 이름은 board- 로 시작 (기존 CSS, bootstrap 과 이름이 겹치지 않게)
+// ============================================================
+
+// ---------- 색상 변수 (여기서 바꾸면 전체에 적용됨) ----------
+$black: #111;
+$white: #fff;
+$line: #e5e5e5; // 테두리, 구분선
+$line-soft: #f0f0f0; // 표 행 사이의 연한 선
+$gray-bg: #f5f5f7; // 배지 배경
+$text-sub: #888; // 보조 글자색
+$text-mid: #555;
+
+// 마우스를 올렸을 때의 부드러운 변화(transition)를 만드는 믹스인
+// "동작 줄이기"를 설정한 사용자에게는 애니메이션을 끔
+@mixin soft-transition($props...) {
+  transition: $props;
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.board-page {
+  max-width: 1200px;
+  margin: 10px auto;
+  padding: 48px 20px 80px;
+  color: $black;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button,
+  input,
+  select {
+    font-family: inherit;
+  }
+
+  // 키보드(Tab)로 이동할 때 보이는 포커스 표시 (접근성)
+  a:focus-visible,
+  button:focus-visible,
+  select:focus-visible,
+  input:focus-visible {
+    outline: 2px solid $black;
+    outline-offset: 2px;
+  }
+
+  // ==========================================================
+  // 1. 상단: 경로 / 제목 / 설명
+  // ==========================================================
+  .board-breadcrumb {
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: $text-sub;
+
+    a:hover {
+      color: $black;
+    }
+
+    span {
+      margin: 0 8px;
+    }
+  }
+
+  .board-title {
+    margin: 0 0 16px;
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+
+  .board-desc {
+    margin: 0 0 48px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: $text-sub;
+  }
+
+  // ==========================================================
+  // 2. 탭 + 글쓰기 버튼
+  // ==========================================================
+  .board-tabbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border-bottom: 1px solid $line;
+  }
+
+  .board-tabs {
+    display: flex;
+    min-width: 0;
+  }
+
+  .board-tab {
+    flex-shrink: 0;
+    padding: 16px 32px;
+    margin-bottom: -1px; // 아래 구분선과 겹쳐서 활성 탭 밑줄이 선 위에 올라오게
+    background: none;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    font-size: 15px;
+    color: $text-mid;
+    cursor: pointer;
+    @include soft-transition(color 0.2s ease, border-color 0.2s ease);
+
+    &:hover {
+      color: $black;
+    }
+
+    // 선택된 탭 : 진한 글자 + 검정 밑줄
+    &.active {
+      color: $black;
+      font-weight: 700;
+      border-bottom-color: $black;
+    }
+  }
+
+  // 검정 버튼 (글쓰기)
+  .board-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 42px;
+    padding: 0 22px;
+    border: 1px solid $black;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    @include soft-transition(background 0.2s ease, border-color 0.2s ease);
+
+    &--primary {
+      background: $black;
+      color: $white;
+
+      &:hover {
+        background: #333;
+        border-color: #333;
+      }
+    }
+  }
+
+  // ==========================================================
+  // 3. 전체 N / 검색창 / 정렬 select
+  // ==========================================================
+  .board-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 32px 0 16px;
+  }
+
+  .board-total {
+    margin: 0;
+    font-size: 16px;
+
+    strong {
+      font-weight: 700;
+    }
+  }
+
+  .board-toolbar-right {
+    display: flex;
+    gap: 12px;
+  }
+
+  .board-search {
+    position: relative;
+
+    input {
+      width: 280px;
+      height: 46px;
+      padding: 0 44px 0 16px;
+      border: 1px solid $line;
+      border-radius: 6px;
+      background: $white;
+      font-size: 14px;
+
+      &:focus {
+        border-color: $black;
+      }
+    }
+
+    // 검색 아이콘을 input 오른쪽 안에 겹쳐 놓음
+    .board-search-icon {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      color: $text-mid;
+      pointer-events: none; // 아이콘 위를 눌러도 input 이 눌리도록
+    }
+  }
+
+  // select : 브라우저 기본 화살표를 없애고(appearance: none) 아이콘을 따로 올림
+  .board-select {
+    position: relative;
+
+    select {
+      appearance: none;
+      width: 124px;
+      height: 46px;
+      padding: 0 36px 0 16px;
+      border: 1px solid $line;
+      border-radius: 6px;
+      background: $white;
+      font-size: 14px;
+      cursor: pointer;
+
+      &:focus {
+        border-color: $black;
+      }
+    }
+
+    .board-select-icon {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      font-size: 12px;
+      pointer-events: none;
+    }
+  }
+
+  // ==========================================================
+  // 4. 글 목록 표
+  // ==========================================================
+  .board-table {
+    width: 100%;
+    table-layout: fixed; // col-* 로 정한 칸 너비를 그대로 지킴
+    border-collapse: collapse;
+    border-top: 1px solid $line;
+
+    th {
+      padding: 18px 16px;
+      font-size: 13px;
+      font-weight: 400;
+      color: $text-sub;
+      text-align: left;
+    }
+
+    td {
+      padding: 18px 16px;
+      background: $white;
+      border-bottom: 1px solid $line-soft;
+      font-size: 14px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    // 모든 줄의 높이를 똑같이 고정 (빈 줄도 글 있는 줄과 같은 높이가 되도록)
+    // 표의 tr height 는 "최소 높이"처럼 동작함
+    tbody tr {
+      height: 64px;
+    }
+
+    tbody tr:hover td {
+      background: #fafafa;
+    }
+
+    // 빈 줄은 밑줄 없이, 마우스를 올려도 색이 바뀌지 않게
+    // (선을 0 으로 지우면 줄마다 1px 씩 낮아져서 버튼 위치가 흔들리므로 투명색으로 숨김)
+    tbody tr.board-row--empty td {
+      border-bottom-color: transparent;
+    }
+    tbody tr.board-row--empty:hover td {
+      background: $white;
+    }
+
+    // 칸 너비 (제목 칸은 남는 공간을 모두 차지)
+    .col-id {
+      width: 100px;
+    }
+    .col-category {
+      width: 120px;
+    }
+    .col-author {
+      width: 150px;
+    }
+    .col-date {
+      width: 150px;
+    }
+
+    // 제목 링크 + 자물쇠 아이콘을 한 줄에 나란히
+    .col-title a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 100%;
+      font-size: 15px;
+
+      &:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+    }
+
+    .board-lock {
+      flex-shrink: 0;
+      font-size: 12px;
+      color: $text-sub;
+    }
+  }
+
+  // 글이 없을 때 문구
+  // 글이 없을 때 안내 문구 : 다른 줄과 높이를 맞추려고 위아래 여백은 기본값 그대로 둠
+  .board-table .board-empty {
+    padding: 18px 16px;
+    text-align: center;
+    color: $text-sub;
+  }
+
+  // 구분 배지 (알약 모양)
+  .board-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: $gray-bg;
+    font-size: 12px;
+    color: $text-mid;
+
+    // 공지는 살짝 진한 색으로 구분
+    &--notice {
+      background: #e6e6ef;
+      color: #33334d;
+    }
+  }
+
+  // ==========================================================
+  // 5. 페이지 번호
+  // ==========================================================
+  .board-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+
+    button {
+      min-width: 38px;
+      height: 38px;
+      padding: 0 8px;
+      border: 0;
+      border-radius: 6px;
+      background: none;
+      font-size: 14px;
+      color: $text-mid;
+      text-align: center;
+      cursor: pointer;
+      @include soft-transition(background 0.2s ease, color 0.2s ease);
+
+      &:hover:not(:disabled):not(.active) {
+        background: $gray-bg;
+      }
+
+      // 누를 수 없는 이전/다음 버튼
+      &:disabled {
+        color: #ccc;
+        cursor: not-allowed;
+      }
+
+      // 현재 페이지 : 검정 네모
+      &.active {
+        background: $black;
+        color: $white;
+        font-weight: 700;
+      }
+    }
+  }
+
+  // ==========================================================
+  //      태블릿 (768px ~ 1023px)
+  //      PC 와 같은 구성을 유지하고 여백과 글자, 칸 너비만 줄임
+  //      번호/작성자 칸도 그대로 보임
+  // ==========================================================
+  @media (min-width: 768px) and (max-width: 1023px) {
+    padding: 40px 24px 70px;
+
+    .board-title {
+      font-size: 38px;
+    }
+
+    .board-desc {
+      margin-bottom: 40px;
+    }
+
+    .board-tab {
+      padding: 16px 24px;
+    }
+
+    // 검색창을 PC(280px)보다 좁게
+    .board-search input {
+      width: 220px;
+    }
+
+    // 표 칸 너비를 줄여서 제목 칸이 더 넓게 보이게
+    .board-table {
+      .col-id {
+        width: 70px;
+      }
+      .col-category {
+        width: 100px;
+      }
+      .col-author {
+        width: 110px;
+      }
+      .col-date {
+        width: 120px;
+      }
+
+      th,
+      td {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+    }
+  }
+
+  //  반응형 (화면 폭 767px 이하 = 모바일)
+  @media (max-width: 767px) {
+    padding: 32px 16px 60px;
+
+    // 모바일에서는 번호 / 작성자 칸을 숨겨서 제목이 넓게 보이게
+    .hide-mobile {
+      display: none;
+    }
+
+    .board-title {
+      font-size: 32px;
+    }
+
+    .board-desc {
+      margin-bottom: 32px;
+    }
+
+    // 탭과 글쓰기 버튼을 위아래로 배치
+    .board-tabbar {
+      flex-direction: column;
+      align-items: stretch;
+      border-bottom: 0;
+
+      .board-tabs {
+        border-bottom: 1px solid $line;
+        // 탭이 화면보다 길어질 때만 옆으로 밀어서 볼 수 있게 하고, 스크롤바는 숨김
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none; // Firefox
+
+        &::-webkit-scrollbar {
+          display: none; // Chrome, Safari
+        }
+      }
+
+      .board-btn {
+        align-self: flex-end;
+        margin-top: 16px;
+      }
+    }
+
+    .board-tab {
+      padding: 14px 20px;
+    }
+
+    .board-toolbar-right {
+      width: 100%;
+    }
+
+    .board-search {
+      flex: 1;
+
+      input {
+        width: 100%;
+      }
+    }
+
+    .board-table {
+      .col-category {
+        width: 82px;
+      }
+      .col-date {
+        width: 100px;
+      }
+      td,
+      th {
+        padding: 16px 8px;
+      }
+    }
+  }
+}

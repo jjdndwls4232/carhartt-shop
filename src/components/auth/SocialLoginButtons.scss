@@ -1,0 +1,82 @@
+// ============================================================
+// SocialLoginButtons.scss  (components/auth 폴더 - 새로 만드는 파일)
+// 역할: 동그란 소셜 로그인 버튼 3개 (SocialLoginPage.scss 에서 옮겨옴)
+// ============================================================
+
+.sns-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+
+  // 전역 CSS 의 button { all: unset } 때문에 모양을 직접 지정
+  .sns-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    img {
+      display: block;
+      width: 36px;
+      height: 36px;
+    }
+
+    &.naver {
+      background: #03c75a;
+    }
+    &.kakao {
+      background: #fee500;
+    }
+    &.google {
+      background: #fff;
+      box-shadow: inset 0 0 0 1px #ddd;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid #222;
+      outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  // 네이버 SDK 버튼 숨김 (DOM 에는 존재해야 클릭 전달 가능)
+  .naver-hidden {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+// 태블릿 (768px ~ 1023px)
+@media (min-width: 768px) and (max-width: 1023px) {
+  .sns-row .sns-circle,
+  .sns-row .sns-circle img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+// 모바일 (767px 이하) : 손가락으로 누르기 쉽게 크게
+@media (max-width: 767px) {
+  .sns-row {
+    gap: 24px;
+
+    .sns-circle,
+    .sns-circle img {
+      width: 44px;
+      height: 44px;
+    }
+  }
+}

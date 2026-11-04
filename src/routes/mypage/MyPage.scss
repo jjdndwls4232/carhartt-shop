@@ -1,0 +1,304 @@
+// ============================================================
+// MyPage.scss  (routes/mypage 폴더 - 새로 만드는 파일)
+// 역할: 마이페이지 스타일 (클래스는 mypage- 로 시작)
+// ============================================================
+
+// ---------- 색상 변수 ----------
+$black: #111;
+$white: #fff;
+$navy: #161b2a; // 회원 정보 배너 배경
+$text-sub: #888;
+$text-menu: #666;
+
+.mypage {
+  display: grid;
+  grid-template-columns: 316px 1fr; // 왼쪽 메뉴 고정 폭 + 오른쪽 나머지
+  gap: 68px;
+  max-width: 1530px;
+  margin: 0 auto;
+  padding: 60px 40px 120px;
+  box-sizing: border-box;
+  color: $black;
+
+  button {
+    font-family: inherit;
+  }
+
+  button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+}
+
+// ==========================================================
+// 1. 왼쪽 메뉴
+// ==========================================================
+.mypage-title {
+  margin: 0 0 56px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.mypage-group + .mypage-group {
+  margin-top: 28px;
+}
+
+// 그룹 제목 버튼 (전역 CSS 의 button { all: unset } 때문에 모양을 직접 지정)
+.mypage-group-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+// 화살표 : 닫혀 있으면 ∨, 열리면 180도 돌아서 ∧
+.mypage-group-arrow {
+  font-size: 13px;
+  color: #aaa;
+  transition: transform 0.25s ease;
+
+  .is-open & {
+    color: $black;
+    transform: rotate(180deg);
+  }
+}
+
+// 하위 메뉴 펼침 애니메이션
+//   grid-template-rows 를 0fr ↔ 1fr 로 바꾸면 내용 높이를 몰라도 부드럽게 열고 닫을 수 있음
+.mypage-group-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+
+  .is-open & {
+    grid-template-rows: 1fr;
+  }
+
+  ul {
+    min-height: 0; // 0fr 일 때 내용이 줄어들 수 있게
+    overflow: hidden;
+    margin: 0;
+    padding: 0 0 0 16px;
+    list-style: none;
+  }
+
+  li:first-child {
+    margin-top: 28px;
+  }
+
+  li + li {
+    margin-top: 24px;
+  }
+
+  button {
+    font-size: 13px;
+    color: $text-menu;
+    cursor: pointer;
+
+    &:hover {
+      color: $black;
+    }
+  }
+}
+
+// ==========================================================
+// 2. 회원 정보 배너
+// ==========================================================
+.mypage-banner {
+  display: grid;
+  grid-template-columns: 1fr 272px 272px; // 회원 정보 / 쿠폰 / 위시리스트
+  align-items: center;
+  min-height: 140px;
+  padding: 24px 48px;
+  box-sizing: border-box;
+  background: $navy;
+  color: $white;
+}
+
+.mypage-name {
+  margin: 0 0 22px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.mypage-profile-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.mypage-email {
+  font-size: 11px;
+  color: #ccc;
+  word-break: break-all;
+}
+
+.mypage-edit-btn {
+  padding: 5px 9px;
+  border: 1px solid $white;
+  border-radius: 999px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+// 쿠폰 / 위시리스트 : dl 의 두 칸을 배너의 2, 3번째 칸에 배치
+.mypage-stats {
+  display: contents; // dl 자체는 칸을 차지하지 않고, 안의 div 들이 배너 grid 의 칸이 됨
+  margin: 0;
+
+  dt {
+    font-size: 13px;
+    font-weight: 400;
+    color: #ccc;
+  }
+
+  dd {
+    margin: 6px 0 0;
+    font-size: 22px;
+    font-weight: 700;
+  }
+}
+
+// ==========================================================
+// 3. 최근 주문 내역
+// ==========================================================
+.mypage-section-title {
+  margin: 60px 0 32px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.mypage-orders-head {
+  margin: 0;
+  padding-bottom: 14px;
+  border-bottom: 2px solid $black;
+  font-size: 18px;
+  font-weight: 500;
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+.mypage-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 170px 0 120px;
+  color: $text-sub;
+
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+.mypage-empty-icon {
+  width: 72px;
+  height: 72px;
+  color: #222;
+}
+
+// "동작 줄이기"를 설정한 사용자에게는 애니메이션을 끔
+@media (prefers-reduced-motion: reduce) {
+  .mypage-group-arrow,
+  .mypage-group-body,
+  .mypage-edit-btn {
+    transition: none;
+  }
+}
+
+// ==========================================================
+//      태블릿 (768px ~ 1023px) : 왼쪽 메뉴를 좁히고 배너 칸을 유동적으로
+// ==========================================================
+@media (min-width: 768px) and (max-width: 1023px) {
+  .mypage {
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    padding: 48px 24px 80px;
+  }
+
+  .mypage-title {
+    margin-bottom: 40px;
+    font-size: 26px;
+  }
+
+  .mypage-banner {
+    grid-template-columns: 1fr auto auto;
+    column-gap: 40px;
+    padding: 24px 28px;
+  }
+
+  .mypage-empty {
+    padding: 120px 0 80px;
+  }
+}
+
+// ==========================================================
+//      모바일 (767px 이하) : 메뉴를 위로, 내용을 아래로 한 줄로 쌓음
+// ==========================================================
+@media (max-width: 767px) {
+  .mypage {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 32px 16px 64px;
+  }
+
+  .mypage-title {
+    margin-bottom: 24px;
+    font-size: 24px;
+  }
+
+  // 메뉴 그룹 사이에 구분선을 넣어 터치하기 쉽게
+  .mypage-group {
+    padding-bottom: 16px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .mypage-group + .mypage-group {
+    margin-top: 16px;
+  }
+
+  // 배너 : 회원 정보 한 줄 + 쿠폰/위시리스트 두 칸
+  .mypage-banner {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 24px;
+    padding: 24px 20px;
+  }
+
+  .mypage-profile {
+    grid-column: 1 / -1; // 두 칸을 모두 차지
+  }
+
+  .mypage-name {
+    margin-bottom: 14px;
+  }
+
+  .mypage-section-title {
+    margin: 40px 0 20px;
+    font-size: 20px;
+  }
+
+  .mypage-orders-head {
+    font-size: 15px;
+  }
+
+  .mypage-empty {
+    padding: 72px 0 40px;
+  }
+
+  .mypage-empty-icon {
+    width: 56px;
+    height: 56px;
+  }
+}

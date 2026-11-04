@@ -1,0 +1,234 @@
+/* 100vw 는 세로 스크롤바 폭까지 포함해서 화면보다 넓어지므로 100% 사용 */
+.footer-wrap {
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.subs-wrap {
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  background-color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  /* 좌우 여백 : 큰 화면에서는 최대 255px, 화면이 좁아지면 같이 줄어듦 (최소 20px) */
+  padding: 0 clamp(20px, 13vw, 255px);
+  box-sizing: border-box;
+}
+
+.subs-text {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.subs-text span {
+  display: block;
+  line-height: 1.5;
+  font-size: .8rem;
+  font-weight: 400;
+}
+
+.input-mail fieldset {
+  display: flex;
+  gap: 10px;
+}
+
+.input-mail input {
+  width: 400px;
+  border-radius: 8px;
+  border: none;
+}
+
+.input-mail button {
+  background-color: #d3d3d3;
+  color: #111;
+  font-size: .8rem;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 5px;
+  white-space: nowrap;
+}
+
+.input-mail button:hover {
+  background-color: #fff;
+}
+
+.info-company {
+  display: flex;
+}
+
+.info-company a {
+  font-size: .8rem;
+}
+
+.info-company a:hover {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* 고정 1440px 대신 "최대 1440px" : 화면이 더 좁으면 화면 폭에 맞춰 줄어듦 */
+.info-wrap {
+  width: 100%;
+  max-width: 1440px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.info-worksout span {
+  display: block;
+  line-height: 1.5;
+  font-size: .8rem;
+}
+
+.info-sns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+
+.info-sns-text {
+  display: flex;
+  gap: 10px;
+  font-size: .7rem;
+}
+
+.info-sns-text a:hover {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.info-sns-icon {
+  display: flex;
+  gap: 10px;
+}
+
+.info-sns-icon a {
+  color: #777;
+}
+
+.info-sns-icon a:hover {
+  color: #111;
+}
+
+.info-text-first {
+  font-weight: 800;
+}
+
+/* 태블릿 */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .subs-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .input-mail input {
+    width: 300px;
+  }
+
+  .input-mail button {
+    width: 60px;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .info-text {
+    font-size: .5rem;
+  }
+
+  .info-sns {
+    flex-direction: column;
+    padding-bottom: 20px;
+  }
+}
+
+/* 모바일 */
+@media (max-width: 767px) {
+  .subs-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 18px;
+    padding: 32px 20px;
+  }
+
+  /* 입력칸 + 버튼이 화면 폭 안에 들어가도록 : 버튼 폭을 뺀 나머지를 입력칸이 차지 */
+  .input-mail,
+  .input-mail fieldset {
+    width: 100%;
+  }
+
+  .input-mail input {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+    height: 36px;
+  }
+
+  .input-mail button {
+    width: 60px;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  /* 회사 링크 목록과 회사 정보를 위아래로 쌓아서 겹치지 않게 */
+  .info-text {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .info-company ul {
+    padding-left: 0;
+    margin-right: 40px;
+  }
+
+  .info-text a,
+  .info-worksout span {
+    font-size: 12px;
+  }
+
+  /* 긴 이메일 주소도 화면 안에서 줄바꿈 */
+  .info-worksout span {
+    word-break: break-all;
+  }
+
+  .info-sns {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding-bottom: 20px;
+  }
+
+  .info-sns-text {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+
+  .info-sns-text p {
+    margin: 0;
+  }
+}

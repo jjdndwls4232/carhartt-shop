@@ -1,0 +1,250 @@
+.login-page {
+  width: 400px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 40px 0 60px;
+  font-size: 13px;
+  color: #222;
+
+  .login-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 40px;
+  }
+
+  // 탭
+  .login-tabs {
+    display: flex;
+    margin-bottom: 30px;
+
+    button {
+      flex: 1;
+      padding: 14px 0;
+      background: none;
+      border: 0;
+      border-bottom: 1px solid #e5e5e5;
+      color: #999;
+      text-align: center;
+      cursor: pointer;
+
+      &.active {
+        color: #222;
+        font-weight: 600;
+        border-bottom-color: #222;
+      }
+    }
+  }
+
+  // 입력 필드
+  .field {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 0;
+      border: 0;
+      border-bottom: 1px solid #e5e5e5;
+      outline: none;
+      font-size: 13px;
+
+      &:focus {
+        border-bottom-color: #222;
+      }
+    }
+  }
+
+  .pw-wrap {
+    position: relative;
+
+    .eye-btn {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: 0;
+      cursor: pointer;
+    }
+  }
+
+  // 체크박스 (디자인만)
+  .check-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 10px;
+    cursor: pointer;
+
+    input {
+      display: none;
+    }
+
+    .box {
+      width: 18px;
+      height: 18px;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    input:checked + .box {
+      border-color: #222;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 2px;
+        width: 4px;
+        height: 8px;
+        border: solid #222;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  // 로그인 실패 안내 문구
+  .login-error {
+    margin: -6px 0 14px;
+    font-size: 12px;
+    color: #d33;
+  }
+
+  // 이미 로그인되어 있을 때 안내 문구
+  .login-welcome {
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  // 검정 버튼 (button 과 Link(a) 둘 다 같은 모양이 되도록 flex 로 가운데 정렬)
+  .submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    background: #222;
+    color: #fff;
+    border: 0;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    &:hover {
+      background-color: #777;
+    }
+  }
+
+  // 로그아웃 버튼 (테두리만 있는 버튼)
+  .logout-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    font-size: 0.9rem;
+    cursor: pointer;
+    &:hover {
+      border-color: #222;
+    }
+  }
+
+  // 하단 링크
+  .sub-links {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0 40px;
+    padding: 0;
+    list-style: none;
+    font-size: 11px;
+    color: #888;
+
+    li {
+      cursor: pointer;
+
+      a {
+        color: inherit;
+      }
+      &:hover {
+        text-decoration: underline;
+        font-weight: 600;
+      }
+      & + li::before {
+        content: "|";
+        margin: 0 10px;
+        color: #ddd;
+      }
+    }
+  }
+
+  .sns-text {
+    text-align: center;
+    font-size: 11px;
+    color: #aaa;
+    margin-bottom: 20px;
+  }
+
+  // 소셜 아이콘 스타일은 components/auth/SocialLoginButtons.scss 로 옮김
+
+  // 비회원 주문조회 하단 박스
+  .notice-box {
+    margin-top: 30px;
+    padding: 14px 16px;
+    background: #f7f7f7;
+    font-size: 11px;
+    color: #888;
+  }
+
+  .cs-box {
+    margin-top: 10px;
+    padding: 16px;
+    border: 1px solid #e5e5e5;
+    text-align: center;
+    font-size: 12px;
+  }
+}
+
+// 태블릿 (768px ~ 1023px)
+@media (min-width: 768px) and (max-width: 1023px) {
+  .login-page {
+    padding: 48px 0 64px;
+  }
+}
+
+// 모바일 (767px 이하) : 화면 양옆에 여백을 두고 꽉 차게
+@media (max-width: 767px) {
+  .login-page {
+    width: auto;
+    padding: 32px 16px 48px;
+    box-sizing: border-box;
+
+    .login-title {
+      font-size: 20px;
+      margin-bottom: 28px;
+    }
+
+    .check {
+      font-size: 12px;
+    }
+  }
+}
