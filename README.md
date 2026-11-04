@@ -5,7 +5,7 @@
 
 🔗 **배포 주소:** https://carhartt-shop-nine.vercel.app/
 
-![메인 화면](./public/readme/main.png)
+![메인 화면](./public/img/readme/main.png)
 
 <br>
 
