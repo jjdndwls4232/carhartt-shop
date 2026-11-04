@@ -1,16 +1,205 @@
-# React + Vite
+# Carhartt WIP 쇼핑몰 클론
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> React로 만든 의류 쇼핑몰 클론 프로젝트입니다.
+> 상품 탐색부터 회원가입, 로그인, 게시판까지 **사용자가 실제로 쇼핑몰을 이용하는 흐름**을 컴포넌트 단위로 설계했습니다.
 
-Currently, two official plugins are available:
+🔗 **배포 주소:** https://carhartt-shop-nine.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![메인 화면](./public/readme/main.png)
 
-## React Compiler
+<br>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 프로젝트 소개
 
-## Expanding the ESLint configuration
+| 항목      | 내용                                                                      |
+| --------- | ------------------------------------------------------------------------- |
+| 작업 형태 | 개인 프로젝트                                                             |
+| 제작 기간 | 2026.10 ~ 2026.11                                                         |
+| 사용 기술 | React 19, Vite, React Router 7, Sass, Bootstrap / React-Bootstrap, Swiper |
+| 외부 API  | 카카오 · 네이버 · 구글 로그인 SDK, 다음(카카오) 우편번호 서비스           |
+| 배포      | Vercel                                                                    |
+| 반응형    | 모바일(767px 이하) 전용 메뉴 패널 제공                                    |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+서버 없이 프론트엔드만으로 쇼핑몰의 주요 흐름을 구현했습니다.
+회원 정보는 브라우저 저장소(`localStorage`)에 저장하고, 나중에 서버를 붙일 때 **저장소 함수만 바꾸면 되도록** 로그인 로직과 저장 로직을 분리했습니다.
+
+<br>
+
+## 페이지 구성
+
+| 경로                                        | 페이지         | 설명                                                           |
+| ------------------------------------------- | -------------- | -------------------------------------------------------------- |
+| `/`                                         | 메인           | 상단 배너, 카테고리 카드, 베스트 상품 슬라이더, 3D 회전 갤러리 |
+| `/goods`                                    | 상품 목록      | 카테고리 탭, 필터/정렬, 색상별 상품 카드                       |
+| `/social-login`                             | 로그인         | 회원 로그인 / 비회원 주문조회 탭, 소셜 로그인                  |
+| `/join` → `/join/form`                      | 회원가입       | 가입 안내 → 회원정보 입력, 약관 동의                           |
+| `/mypage`                                   | 마이페이지     | 로그인한 회원만 접근 가능                                      |
+| `/board-list`                               | 게시판 목록    | 탭, 검색, 정렬, 페이지네이션                                   |
+| `/board-list/:id`                           | 게시글 상세    | 이전글/다음글, 내 글 수정·삭제                                 |
+| `/board-list/write`, `/board-list/edit/:id` | 글 작성 / 수정 | 첨부파일 드래그앤드롭                                          |
+
+<br>
+
+## 주요 기능
+
+### 1. 헤더 & 모바일 메뉴
+
+- 메뉴마다 성격이 다른 드롭다운(텍스트 링크, 이미지형 LOOK BOOK, 검색창, 회원 메뉴)을 **각각 컴포넌트로 분리**했습니다.
+- 헤더 바깥을 클릭하거나 페이지를 이동하면 열린 드롭다운이 자동으로 닫힙니다.
+- 모바일에서는 별도의 메뉴 패널이 열리고, 열린 동안 뒤쪽 페이지의 스크롤을 잠급니다. 화면을 PC 크기로 늘리면 패널이 자동으로 닫힙니다.
+- 로그인 여부에 따라 회원 메뉴(로그인/회원가입 ↔ 회원 이름/마이페이지/로그아웃)가 바뀝니다.
+
+### 2. 로그인 & 소셜 로그인
+
+- Context API(`AuthProvider`)와 커스텀 훅(`useAuth`)으로 **모든 페이지에서 같은 로그인 상태**를 공유합니다.
+- "로그인 상태 유지"를 체크하면 `localStorage`, 체크하지 않으면 `sessionStorage`에 저장해 브라우저를 닫으면 로그아웃됩니다.
+- 아이디 저장, 비밀번호 보기/숨기기, Enter 키 로그인을 지원합니다.
+- 로그인 실패 시 아이디와 비밀번호 중 무엇이 틀렸는지 구분하지 않고 안내해 **아이디 존재 여부가 노출되지 않게** 했습니다.
+- 카카오, 네이버, 구글 SDK로 소셜 로그인을 연결했고, API 키는 환경 변수(`.env.local`)로 분리했습니다.
+
+### 3. 회원가입
+
+- 입력칸을 벗어나거나 가입 버튼을 눌렀을 때만 에러를 보여줘서, 처음부터 빨간 글씨가 가득하지 않게 했습니다.
+- 비밀번호는 영문/숫자/특수문자 조합 규칙으로 검사하고, **SHA-256 해시로 변환해서 저장**합니다. 원문 비밀번호는 저장하지 않습니다.
+- 휴대폰 번호는 숫자만 남기고 11자리로 제한하고, 이메일은 도메인을 목록에서 고르거나 직접 입력할 수 있습니다.
+- 다음 우편번호 검색으로 주소를 입력하며, 스크립트는 **버튼을 처음 누를 때만 불러와** 첫 로딩을 가볍게 했습니다.
+- 가입 버튼을 누르면 첫 번째 에러 칸으로 스크롤과 포커스가 이동하고, 가입이 끝나면 로그인 페이지에 아이디를 미리 채워 줍니다.
+
+### 4. 상품 목록
+
+- 상품 데이터는 `public/data/goods.json`에서 `fetch`로 불러오고, 페이지를 떠나면 `AbortController`로 요청을 취소합니다.
+- 선택한 카테고리를 주소(`?category=men`)에 저장해서, **새로고침하거나 링크를 공유해도 같은 탭**이 열립니다.
+- 상품 카드의 색상 동그라미를 누르면 해당 색상 사진으로 바뀌고, 사진이 없는 색상은 "준비중"으로 표시합니다.
+
+### 5. 게시판 (COMMUNITY)
+
+- 페이지 컴포넌트는 데이터와 상태를 관리하고, 화면 컴포넌트는 props로 받아 그리기만 하도록 **역할을 나눴습니다**.
+- 목록은 "탭 필터 → 검색 → 정렬 → 페이지 자르기" 순서로 처리하고, 조건이 바뀌면 1페이지로 돌아갑니다.
+- 글이 적어도 빈 줄을 채워서 페이지 번호 위치가 흔들리지 않게 했습니다.
+- 열람 권한이 없는 글은 이동을 막고 안내 모달을 띄웁니다. 내 글일 때만 수정/삭제 버튼이 보입니다.
+- 글 작성 시 첨부파일을 드래그앤드롭으로 올릴 수 있고, 최대 개수를 넘으면 남은 자리만큼만 받습니다.
+
+### 6. 메인 페이지 인터랙션
+
+- **베스트 상품 슬라이더:** Swiper로 자동 재생과 좌우 이동을 구현했습니다.
+- **3D 회전 갤러리:** 이미지 카드가 원통 표면을 따라 계속 회전하고, 마우스로 끌면 관성을 받아 미끄러지다가 다시 자동 회전으로 돌아옵니다.
+  - 매 프레임 바뀌는 값은 `state` 대신 `ref`에 저장해 불필요한 렌더링을 막았습니다.
+  - 운영체제에서 "동작 줄이기"를 켠 사용자에게는 자동 회전을 끕니다.
+
+### 7. 마이페이지
+
+- 로그인하지 않고 들어오면 로그인 페이지로 보내고, **로그인 후 다시 마이페이지로 돌아오게** 했습니다.
+- 왼쪽 메뉴는 접고 펼치는 아코디언으로 구성했습니다.
+
+<br>
+
+## 신경 쓴 부분
+
+### 사용자 흐름
+
+- 로그인이 필요한 페이지 → 로그인 → 원래 페이지로 복귀
+- 회원가입 완료 → 로그인 페이지에 아이디 자동 입력
+- 상품 탭과 페이지 이동 시 열린 메뉴 자동 닫기
+
+사용자가 다음에 무엇을 해야 할지 고민하지 않도록 **페이지와 페이지 사이의 흐름**을 먼저 설계했습니다.
+
+### 웹 접근성
+
+- 에러 문구에 `role="alert"`를 넣어 스크린 리더가 바로 읽어 줍니다.
+- `label`과 입력칸의 `id`를 연결해 글자를 눌러도 입력칸이 선택됩니다.
+- 모바일 메뉴 버튼과 패널에 `aria-expanded`, `aria-hidden`으로 열림 상태를 전달합니다.
+- 모달은 React-Bootstrap `Modal`을 사용해 ESC 닫기와 포커스 가두기를 지원합니다.
+
+### 유지보수를 고려한 구조
+
+- 로그인 상태(`AuthProvider`)와 저장 방식(`userStore`)을 분리해, 서버가 생기면 저장 함수만 교체하면 됩니다.
+- 메뉴, 카테고리, 약관처럼 반복되는 내용은 **데이터(배열/객체)로 분리**해서 JSX를 수정하지 않고 내용만 바꿀 수 있게 했습니다.
+- 컴포넌트마다 스타일 파일(`.scss`)을 따로 두었습니다.
+
+<br>
+
+## 트러블슈팅
+
+### 1. 로컬에서는 되는데 Vercel 배포에서만 빌드 실패
+
+- **문제:** `npm run build`는 로컬에서 성공했는데, Vercel에서는 `Rolldown failed to resolve import "@fortawesome/fontawesome-svg-core"` 오류로 실패했습니다.
+- **원인:** `react-fontawesome`가 동작하려면 `fontawesome-svg-core`가 필요한데 `package.json`에 빠져 있었습니다. 로컬 `node_modules`에만 남아 있어서 로컬에서는 문제가 드러나지 않았습니다. 프로젝트에 `yarn.lock`과 `package-lock.json`이 함께 있어 Vercel이 yarn으로 설치한 것도 원인 파악을 어렵게 했습니다.
+- **해결:** 빠진 의존성을 아이콘 패키지와 같은 메이저 버전으로 설치하고, lock 파일을 `package-lock.json` 하나로 통일했습니다. 그 뒤 `node_modules`를 지우고 새로 설치해 **배포 환경과 같은 조건**에서 빌드를 검증했습니다.
+
+### 2. 배포 후 하위 페이지에서 새로고침하면 404
+
+- **문제:** `/board-list` 같은 주소에서 새로고침하면 404 페이지가 나왔습니다.
+- **원인:** React Router는 브라우저에서 주소를 처리하는데, 새로고침하면 서버가 해당 경로의 파일을 찾으려 하기 때문입니다.
+- **해결:** `vercel.json`에 모든 경로를 `index.html`로 보내는 rewrite 설정을 추가했습니다.
+
+### 3. 소셜 로그인 키가 없을 때 화면 전체가 하얗게 되는 문제
+
+- **문제:** 환경 변수가 비어 있으면 카카오 SDK 초기화에서 에러가 나서 페이지 전체가 렌더링되지 않았습니다.
+- **해결:** 초기화 전에 키가 있는지 먼저 확인하고, SDK가 로드될 때까지 짧은 간격으로 확인하다가 최대 5초 뒤 멈추도록 했습니다.
+
+### 4. 휴대폰 번호 입력 시 숫자가 잘리는 문제
+
+- **문제:** `maxLength`로 길이를 제한하니 `010-1234-5678`처럼 하이픈을 넣으면 뒷자리 숫자가 잘렸습니다.
+- **해결:** 입력할 때 숫자가 아닌 글자를 지우고, 숫자만 11자리까지 남기도록 직접 처리했습니다.
+
+<br>
+
+## 폴더 구조
+
+```
+src/
+├─ main.jsx              # BrowserRouter, AuthProvider로 앱 감싸기
+├─ App.jsx               # 라우트 정의
+├─ auth/
+│  ├─ AuthProvider.jsx   # 로그인 상태와 회원가입/로그인/로그아웃 함수
+│  ├─ authContext.js
+│  ├─ useAuth.js         # 로그인 정보를 꺼내 쓰는 커스텀 훅
+│  └─ userStore.js       # 브라우저 저장소 읽기/쓰기, 비밀번호 해시
+├─ components/
+│  ├─ common/            # Header, Footer
+│  ├─ home/              # TopBanner, HomeCardSection, BestProductSlider, WorldWide
+│  ├─ goods/             # GoodsCard, goodsData
+│  ├─ auth/              # SocialLoginButtons, 약관 데이터
+│  └─ board/             # PostList, PostDetail, PostForm, NoAccessModal
+└─ routes/
+   ├─ Home.jsx
+   ├─ Goods.jsx
+   ├─ auth/              # SocialLoginPage, JoinIntroPage, JoinFormPage
+   ├─ mypage/            # MyPage
+   └─ board/             # BoardListPage, BoardDetailPage, BoardWritePage
+```
+
+<br>
+
+## 실행 방법
+
+```bash
+npm install
+npm run dev
+```
+
+소셜 로그인을 사용하려면 프로젝트 최상위에 `.env.local` 파일을 만들고 각 서비스의 키를 넣어야 합니다.
+
+<br>
+
+## 배운 점
+
+- 페이지가 늘어날수록 **상태를 어디에 둘지**가 중요하다는 것을 배웠습니다. 로그인처럼 여러 곳에서 쓰는 값은 Context로, 화면 안에서만 쓰는 값은 컴포넌트 안에 두는 기준을 세웠습니다.
+- 데이터를 다루는 컴포넌트와 화면을 그리는 컴포넌트를 나누니, 기능을 고칠 때 어느 파일을 열어야 할지 명확해졌습니다.
+- 로컬에서 잘 되는 것과 배포 환경에서 잘 되는 것은 다르다는 것을 직접 겪었습니다. 의존성과 환경 변수를 꼼꼼히 관리하는 습관을 들이게 됐습니다.
+
+<br>
+
+## 앞으로 개선할 점
+
+- 장바구니와 주문 기능 구현
+- 회원 정보와 게시글을 서버(백엔드)에 저장하도록 변경
+- 태블릿 구간(768px ~ 1023px) 레이아웃 세분화
+- 마이페이지 메뉴 기능 연결
+
+<br>
+
+---
+
+> 이 사이트는 **포트폴리오 목적으로 제작한 비상업적 클론 프로젝트**이며, 실제 Carhartt WIP와는 관련이 없습니다.
+> 실제 상품 판매나 결제는 이루어지지 않으며, 사용한 브랜드명과 이미지의 권리는 원저작자에게 있습니다.

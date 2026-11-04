@@ -1,10 +1,10 @@
 // ============================================================
-// BoardDetailPage.jsx  (routes 폴더 - 실제로 화면에 보여지는 페이지)
+// BoardListPage.jsx  (routes 폴더 - 실제로 화면에 보여지는 페이지)
 // 역할: 글 목록 화면의 "두뇌"
 //   1) 샘플 글 데이터를 갖고 있음 (나중에 서버 데이터로 교체)
 //   2) 탭 / 검색어 / 정렬 / 페이지 번호를 state 로 기억함
 //   3) 그 값에 맞게 글을 "필터 → 검색 → 정렬 → 페이지 자르기" 한 뒤
-//      화면 그리기는 PostDetail 컴포넌트에 맡김
+//      화면 그리기는 PostList 컴포넌트에 맡김
 // ============================================================
 import { useState } from "react";
 import PostList from "../../components/board/PostList";
@@ -80,7 +80,7 @@ const BoardListPage = () => {
     setPage(1);
   };
 
-  // 필요한 값과 함수를 props 로 넘겨서 화면 그리기를 PostDetail 에 맡김
+  // 필요한 값과 함수를 props 로 넘겨서 화면 그리기를 PostList 에 맡김
   return (
     <>
       <PostList

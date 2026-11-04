@@ -1,5 +1,5 @@
 // ============================================================
-// PostDetail.jsx  (components 폴더 - 화면을 "그리기만" 하는 컴포넌트)
+// PostList.jsx  (components 폴더 - 화면을 "그리기만" 하는 컴포넌트)
 // 역할: 시안 이미지의 글 목록 화면 전체를 그림
 //   위에서 아래 순서 : 경로(Home / Community) → 제목 → 설명
 //                    → 탭 + 글쓰기 버튼 → 전체 N + 검색창 + 정렬
@@ -200,7 +200,11 @@ const PostList = ({
 
           {/* 빈 줄 : 내용 없이 높이만 차지 (aria-hidden 으로 스크린리더에서는 무시) */}
           {Array.from({ length: emptyRows }, (_, i) => (
-            <tr key={`empty-${i}`} className="board-row--empty" aria-hidden="true">
+            <tr
+              key={`empty-${i}`}
+              className="board-row--empty"
+              aria-hidden="true"
+            >
               <td colSpan={5}></td>
             </tr>
           ))}
